@@ -17,8 +17,10 @@ import { HomeComponent } from './home/home.component';
 import { AboutComponent } from './about/about.component';
 import { ContactComponent } from './contact/contact.component';
 
+import { LeaderService } from './services/leader.service';
 import { DishService } from './services/dish.service';
 import { PromotionService } from './services/promotion.service';
+
 
 import { AppRoutingModule } from './app-routing/app-routing.module';
 
@@ -42,7 +44,7 @@ import { AppRoutingModule } from './app-routing/app-routing.module';
     FlexLayoutModule,
     AppRoutingModule
   ],
-  providers: [ DishService, PromotionService ],
+  providers: [ DishService, PromotionService, LeaderService ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

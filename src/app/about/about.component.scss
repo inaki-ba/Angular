@@ -1,0 +1,21 @@
+@mixin zero-margin($pad-up-down, $pad-left-right) {
+    margin: 0px auto;
+    padding: $pad-up-down $pad-left-right;
+}
+
+.container {    
+    @include zero-margin(0px, 20px);
+}
+
+.img-circle {
+	border-radius: 50%;
+}
+
+.my-line {    
+    @include zero-margin(3px, 0px);
+    line-height: 10px;
+}
+
+.md-list-item-text {
+	@include zero-margin(0px, 20px);
+}
