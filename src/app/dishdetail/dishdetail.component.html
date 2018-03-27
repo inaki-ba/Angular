@@ -6,8 +6,8 @@
 	fxLayoutGap="10px"
 	fxLayoutGap.xs="0">
 
-	<div fxFlex="40" *ngIf="dish">
-		<md-card>
+	<div fxFlex="40">
+		<md-card *ngIf="dish">
 	      <md-card-header>
 	        <md-card-title>
 	          <h3>{{dish.name | uppercase}}</h3>
@@ -27,6 +27,10 @@
 	        <button md-button>SHARE</button>
 	      </md-card-actions>
 	    </md-card>
+	    <div [hidden]="dish">
+			<md-spinner></md-spinner> <h4>Loading . . . Please Wait</h4>
+		</div>
+
 	</div>
 
 	<div fxFlex="40"  fxLayout="column">		
@@ -38,5 +42,8 @@
 				<p md-line>-- <span> {{comm.author}} {{comm.date | date}} </span> </p>
 			</md-list-item>
 		</md-list>		
+		<div [hidden]="dish">
+			<md-spinner></md-spinner> <h4>Loading . . . Please Wait</h4>
+		</div>
 	</div>
 </div>
