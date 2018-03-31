@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 
 import { FormBuilder, FormGroup, Validators} from '@angular/forms';
 
@@ -28,6 +28,7 @@ export class DishdetailComponent implements OnInit {
   dishIds : number[];
   prev: number;
   next: number;  
+  errMess: string;
 
 formErrors = {
       'author': '',
@@ -49,7 +50,8 @@ formErrors = {
 
           private dishservice: DishService, 
   				private route: ActivatedRoute,
-  				private location: Location) { 
+  				private location: Location,
+          @Inject('BaseURL') private BaseURL ) { 
 
       this.createForm();
   }
@@ -60,8 +62,8 @@ formErrors = {
 
   	this.route.params
       .switchMap((params: Params) => this.dishservice.getDish(+params['id']))
-  	  .subscribe( dish => { this.dish = dish; this.setPrevNext(dish.id)}
-      );
+  	  .subscribe( dish => { this.dish = dish; this.setPrevNext(dish.id)},
+                    errmess => this.errMess = <any>errmess );
       this.commentForm.reset({
         author: '',
         comment: '',
@@ -127,4 +129,4 @@ formErrors = {
       rating: 5
     }); 
   }
-}
+} 
