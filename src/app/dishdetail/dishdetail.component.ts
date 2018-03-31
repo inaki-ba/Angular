@@ -25,6 +25,8 @@ export class DishdetailComponent implements OnInit {
   c = {};
   
   dish : Dish;
+  dishcopy = null;          // Use this to modify elements and persist them, copy to dish
+                            // once server confirms everything OK.
   dishIds : number[];
   prev: number;
   next: number;  
@@ -62,7 +64,7 @@ formErrors = {
 
   	this.route.params
       .switchMap((params: Params) => this.dishservice.getDish(+params['id']))
-  	  .subscribe( dish => { this.dish = dish; this.setPrevNext(dish.id)},
+  	  .subscribe( dish => { this.dish = dish; this.dishcopy = dish; this.setPrevNext(dish.id)},
                     errmess => this.errMess = <any>errmess );
       this.commentForm.reset({
         author: '',
@@ -120,8 +122,11 @@ formErrors = {
 
     this.comment.date = m + ' ' + date.getDate().toString() + ',' + date.getFullYear().toString();
 
-    this.dish.comments.push(this.comment);
+    this.dishcopy.comments.push(this.comment);    // Modify Restangular object first
 
+    this.dishcopy.save().
+      subscribe(dish => this.dish = dish);  // Update object only once server confirmed 
+                                            // the save operation.
     console.log(this.comment);
     this.commentForm.reset({
       author: '',
