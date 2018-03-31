@@ -41,7 +41,7 @@
 
 	</div>
 
-	<div fxFlex="40"  fxLayout="column" *ngIf="dish">
+	<div fxFlex="40"   fxFlexOffset="20px" fxLayout="column" *ngIf="dish">
 		<md-list fxFlex >
 			<h2>Comments</h2>
 			<md-list-item *ngFor="let comm of dish.comments">
@@ -53,5 +53,46 @@
 		<div [hidden]="dish">
 			<md-spinner></md-spinner> <h4>Loading . . . Please Wait</h4>
 		</div>
+
+		<div fxFlex>
+			<md-list>
+				<span [hidden]="commentForm.invalid">
+				<md-list-item [hidden]="commentForm.invalid" >
+					<!--p md-line> <span> {{c|json}} </span> </p-->
+				    <p md-line> <span> {{commentForm.value.comment}} </span> </p>
+					<p md-line> <span> {{commentForm.value.rating}} </span> Stars</p>
+					<p md-line>-- <span> {{commentForm.value.author}} </span> </p>
+				</md-list-item>
+				</span>
+			</md-list>
+
+		    <form novalidate [formGroup]="commentForm" (ngSubmit)="onSubmit()">
+		      <p>
+		        <md-input-container dividerColor="{{formErrors.author ? 'warn' : 'primary'}}">
+		          <input mdInput formControlName="author" placeholder="Your name" [(ngModel)]="c.author" type="text" name="author" required>
+		          <md-hint color="warn">
+		            <span [hidden]="!(formErrors.author)">{{formErrors.author}}</span>
+		          </md-hint>
+		        </md-input-container>
+			 </p>
+			 
+			 <md-slider min="1" max="5" step="1" thumbLabel="1" tickInterval="1" [value]="rating" formControlName="rating" [(ngModel)]="c.rating" name="rating" ></md-slider>
+			 
+		     <p>
+		        <md-input-container dividerColor="{{formErrors.comment ? 'warn' : 'primary'}}">
+		          <textarea mdInput formControlName="comment" placeholder="Your Comments" rows="10" [(ngModel)]="c.comment" name="comment" required>
+		          </textarea>
+		          <md-hint color='warn'>          
+		            <span [hidden]="!(formErrors.comment)">{{formErrors.comment}}</span>
+		          </md-hint>
+		        </md-input-container>            
+		     </p>		      
+
+		     <p>
+		     	<button type="submit" md-button class="background-primary text-floral-white" [disabled]="commentForm.invalid">Submit</button>
+		  	 </p>
+		    </form>
+		  </div>
 	</div>
+   
 </div>
